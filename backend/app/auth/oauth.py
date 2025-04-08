@@ -1,5 +1,7 @@
 from urllib.parse import urlencode
 import httpx
+import os
+import requests
 from app.config import settings
 
 GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
@@ -46,3 +48,15 @@ async def get_user_info(access_token: str):
         response = await client.get(GOOGLE_USERINFO_URL, headers=headers)
         response.raise_for_status()
         return response.json()
+
+def refresh_access_token(refresh_token: str):
+    response = requests.post(GOOGLE_TOKEN_URL, data={
+        "client_id": os.getenv("GOOGLE_CLIENT_ID"),
+        "client_secret": os.getenv("GOOGLE_CLIENT_SECRET"),
+        "refresh_token": refresh_token,
+        "grant_type": "refresh_token",
+    })
+
+    if response.status_code == 200:
+        return response.json()
+    return None
