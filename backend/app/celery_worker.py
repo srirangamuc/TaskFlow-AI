@@ -1,16 +1,18 @@
 from celery import Celery
-from celery.schedules import crontab
+from app.config import settings
 
 celery_app = Celery(
-    "worker",
-    broker="redis://localhost:6379/0",
-    backend="redis://localhost:6379/0"
+    "taskflowai",
+    broker=settings.REDIS_BROKER_URL,
+    backend=settings.REDIS_BROKER_URL,
+    include=["app.tasks.calendar"]
 )
 
 celery_app.conf.beat_schedule = {
-     "fetch-calendar-events-every-10-mins": {
-        "task": "app.tasks.fetch_events.poll_calendar_events",
-        "schedule": crontab(minute="*/10"),
+    "poll-calendar-every-1-minutes": {
+        "task": "app.tasks.calendar.poll_calendar_events",
+        "schedule": 60.0,  # 1 minutes
     }
 }
+
 celery_app.conf.timezone = 'UTC'
