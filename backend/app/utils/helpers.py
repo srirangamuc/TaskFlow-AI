@@ -6,7 +6,7 @@ from fastapi import Request, HTTPException, Depends
 
 JWT_SECRET = settings.JWT_SECRET # move to env later
 ALGORITHM = "HS256"
-JWT_EXPIRY_MINUTES = 60 * 24  # 24 hours
+JWT_EXPIRY_MINUTES = 60 * 24 * 30  # 24 hours
 
 def create_jwt(data: dict):
     to_encode = data.copy()

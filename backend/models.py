@@ -29,7 +29,7 @@ class Task(Base):
     description = Column(String)
     status = Column(String,default="pending")
     priority = Column(String,default="medium")
-    due_date = Column(DateTime,default=datetime.datetime.now(datetime.timezone.utc))
+    due_date = Column(DateTime,default=datetime.now(datetime.timezone.utc))
     
     user = relationship("User",back_populates="tasks")
     

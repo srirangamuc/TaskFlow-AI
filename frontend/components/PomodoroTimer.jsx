@@ -280,179 +280,185 @@ export default function PomodoroTimer() {
   }, [])
   
   return (
-    <div className="absolute top-4 right-6 bg-white shadow-xl rounded-xl p-4 w-96 border border-gray-300 z-40">
-      <h3 className="text-lg font-bold text-center mb-2">🍅 Pomodoro Timer</h3>
+    <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 shadow-xl relative overflow-hidden">
+      {/* Blurry gradient elements */}
+      <div className="absolute -top-20 -right-20 w-40 h-40 bg-lime-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-10 left-10 w-40 h-40 bg-lime-500/5 rounded-full blur-3xl"></div>
       
-      {/* Current Mode Display */}
-      <div className={`text-center text-sm mb-1 font-medium ${isWorkMode ? 'text-red-600' : 'text-green-600'}`}>
-        {isWorkMode ? '🖥️ WORK MODE' : '☕ BREAK MODE'} 
-        {cycles > 0 && ` - Cycles Completed: ${cycles}`}
-      </div>
-      
-      {/* Timer Display */}
-      <div className={`text-2xl font-mono text-center mb-3 p-2 rounded-lg border-2 ${
-        isWorkMode ? 'bg-red-50 border-red-200' : 'bg-green-50 border-green-200'
-      }`}>
-        {formatTime()}
-      </div>
-      
-      {/* Work Timer Settings */}
-      <div className="mb-4">
-        <h4 className="font-medium text-red-600 mb-1 text-center text-sm">Work Timer</h4>
-        <div className="grid grid-cols-4 gap-1 mb-2 text-sm">
-          <div>
-            <label className="block text-xs">Hours</label>
-            <input
-              type="number"
-              value={workHours}
-              onChange={(e) => setWorkHours(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full border px-2 py-1 rounded text-sm"
-              min="0"
-              disabled={isRunning}
-            />
-          </div>
-          <div>
-            <label className="block text-xs">Minutes</label>
-            <input
-              type="number"
-              value={workMinutes}
-              onChange={(e) => setWorkMinutes(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full border px-2 py-1 rounded text-sm"
-              min="0"
-              disabled={isRunning}
-            />
-          </div>
-          <div>
-            <label className="block text-xs">Seconds</label>
-            <input
-              type="number"
-              value={workSeconds}
-              onChange={(e) => setWorkSeconds(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full border px-2 py-1 rounded text-sm"
-              min="0"
-              disabled={isRunning}
-            />
-          </div>
-          <div>
-            <label className="block text-xs">Ms</label>
-            <input
-              type="number"
-              value={workMilliseconds}
-              onChange={(e) => setWorkMilliseconds(Math.max(0, Math.min(999, parseInt(e.target.value) || 0)))}
-              className="w-full border px-2 py-1 rounded text-sm"
-              min="0"
-              max="999"
-              disabled={isRunning}
-            />
-          </div>
+      <div className="relative z-10">
+        <h3 className="text-xl font-bold text-center mb-4 text-white">🍅 <span className="text-lime-400">Pomodoro</span> Timer</h3>
+        
+        {/* Current Mode Display */}
+        <div className={`text-center text-sm mb-3 font-medium ${isWorkMode ? 'text-lime-400' : 'text-lime-400'}`}>
+          {isWorkMode ? '🖥️ WORK MODE' : '☕ BREAK MODE'} 
+          {cycles > 0 && ` - Cycles Completed: ${cycles}`}
         </div>
-        <button
-          onClick={setWorkTimer}
-          className="w-full bg-red-500 hover:bg-red-600 text-white text-xs py-1 rounded"
-          disabled={isRunning}
-        >
-          Set Work Timer
-        </button>
-      </div>
-      
-      {/* Break Timer Settings */}
-      <div className="mb-4">
-        <h4 className="font-medium text-green-600 mb-1 text-center text-sm">Break Timer</h4>
-        <div className="grid grid-cols-4 gap-1 mb-2 text-sm">
-          <div>
-            <label className="block text-xs">Hours</label>
-            <input
-              type="number"
-              value={breakHours}
-              onChange={(e) => setBreakHours(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full border px-2 py-1 rounded text-sm"
-              min="0"
-              disabled={isRunning}
-            />
-          </div>
-          <div>
-            <label className="block text-xs">Minutes</label>
-            <input
-              type="number"
-              value={breakMinutes}
-              onChange={(e) => setBreakMinutes(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full border px-2 py-1 rounded text-sm"
-              min="0"
-              disabled={isRunning}
-            />
-          </div>
-          <div>
-            <label className="block text-xs">Seconds</label>
-            <input
-              type="number"
-              value={breakSeconds}
-              onChange={(e) => setBreakSeconds(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full border px-2 py-1 rounded text-sm"
-              min="0"
-              disabled={isRunning}
-            />
-          </div>
-          <div>
-            <label className="block text-xs">Ms</label>
-            <input
-              type="number"
-              value={breakMilliseconds}
-              onChange={(e) => setBreakMilliseconds(Math.max(0, Math.min(999, parseInt(e.target.value) || 0)))}
-              className="w-full border px-2 py-1 rounded text-sm"
-              min="0"
-              max="999"
-              disabled={isRunning}
-            />
-          </div>
+        
+        {/* Timer Display */}
+        <div className={`text-3xl font-mono text-center mb-6 p-4 rounded-lg border ${
+          isWorkMode ? 'bg-gray-900/50 border-lime-500/30 text-lime-400' : 'bg-gray-900/50 border-lime-500/30 text-lime-400'
+        }`}>
+          {formatTime()}
         </div>
-        <button
-          onClick={setBreakTimer}
-          className="w-full bg-green-500 hover:bg-green-600 text-white text-xs py-1 rounded"
-          disabled={isRunning}
-        >
-          Set Break Timer
-        </button>
-      </div>
-      
-      {/* Control Buttons */}
-      <div className="grid grid-cols-2 gap-2 mb-2">
-        <button
-          onClick={startTimer}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-          disabled={isRunning || !hasTimeLeft()}
-        >
-          Start
-        </button>
-        <button
-          onClick={pauseTimer}
-          className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
-          disabled={!isRunning}
-        >
-          Pause
-        </button>
-      </div>
-      
-      <div className="grid grid-cols-2 gap-2">
-        <button
-          onClick={resetCurrentTimer}
-          className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded"
-        >
-          Reset Current
-        </button>
-        <button
-          onClick={resetAll}
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-        >
-          Reset All
-        </button>
+        
+        {/* Work Timer Settings */}
+        <div className="mb-6">
+          <h4 className="font-medium text-lime-400 mb-2 text-center text-sm">Work Timer</h4>
+          <div className="grid grid-cols-4 gap-2 mb-3">
+            <div>
+              <label className="block text-xs text-gray-300 mb-1">Hours</label>
+              <input
+                type="number"
+                value={workHours}
+                onChange={(e) => setWorkHours(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full bg-gray-900/50 border border-gray-700 text-white px-2 py-1 rounded text-sm focus:border-lime-500/50 focus:outline-none"
+                min="0"
+                disabled={isRunning}
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-300 mb-1">Minutes</label>
+              <input
+                type="number"
+                value={workMinutes}
+                onChange={(e) => setWorkMinutes(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full bg-gray-900/50 border border-gray-700 text-white px-2 py-1 rounded text-sm focus:border-lime-500/50 focus:outline-none"
+                min="0"
+                disabled={isRunning}
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-300 mb-1">Seconds</label>
+              <input
+                type="number"
+                value={workSeconds}
+                onChange={(e) => setWorkSeconds(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full bg-gray-900/50 border border-gray-700 text-white px-2 py-1 rounded text-sm focus:border-lime-500/50 focus:outline-none"
+                min="0"
+                disabled={isRunning}
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-300 mb-1">Ms</label>
+              <input
+                type="number"
+                value={workMilliseconds}
+                onChange={(e) => setWorkMilliseconds(Math.max(0, Math.min(999, parseInt(e.target.value) || 0)))}
+                className="w-full bg-gray-900/50 border border-gray-700 text-white px-2 py-1 rounded text-sm focus:border-lime-500/50 focus:outline-none"
+                min="0"
+                max="999"
+                disabled={isRunning}
+              />
+            </div>
+          </div>
+          <button
+            onClick={setWorkTimer}
+            className="w-full bg-lime-500/20 hover:bg-lime-500/30 border border-lime-500/30 text-lime-400 text-sm py-1 rounded transition-all"
+            disabled={isRunning}
+          >
+            Set Work Timer
+          </button>
+        </div>
+        
+        {/* Break Timer Settings */}
+        <div className="mb-6">
+          <h4 className="font-medium text-lime-400 mb-2 text-center text-sm">Break Timer</h4>
+          <div className="grid grid-cols-4 gap-2 mb-3">
+            <div>
+              <label className="block text-xs text-gray-300 mb-1">Hours</label>
+              <input
+                type="number"
+                value={breakHours}
+                onChange={(e) => setBreakHours(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full bg-gray-900/50 border border-gray-700 text-white px-2 py-1 rounded text-sm focus:border-lime-500/50 focus:outline-none"
+                min="0"
+                disabled={isRunning}
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-300 mb-1">Minutes</label>
+              <input
+                type="number"
+                value={breakMinutes}
+                onChange={(e) => setBreakMinutes(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full bg-gray-900/50 border border-gray-700 text-white px-2 py-1 rounded text-sm focus:border-lime-500/50 focus:outline-none"
+                min="0"
+                disabled={isRunning}
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-300 mb-1">Seconds</label>
+              <input
+                type="number"
+                value={breakSeconds}
+                onChange={(e) => setBreakSeconds(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full bg-gray-900/50 border border-gray-700 text-white px-2 py-1 rounded text-sm focus:border-lime-500/50 focus:outline-none"
+                min="0"
+                disabled={isRunning}
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-300 mb-1">Ms</label>
+              <input
+                type="number"
+                value={breakMilliseconds}
+                onChange={(e) => setBreakMilliseconds(Math.max(0, Math.min(999, parseInt(e.target.value) || 0)))}
+                className="w-full bg-gray-900/50 border border-gray-700 text-white px-2 py-1 rounded text-sm focus:border-lime-500/50 focus:outline-none"
+                min="0"
+                max="999"
+                disabled={isRunning}
+              />
+            </div>
+          </div>
+          <button
+            onClick={setBreakTimer}
+            className="w-full bg-lime-500/20 hover:bg-lime-500/30 border border-lime-500/30 text-lime-400 text-sm py-1 rounded transition-all"
+            disabled={isRunning}
+          >
+            Set Break Timer
+          </button>
+        </div>
+        
+        {/* Control Buttons */}
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <button
+            onClick={startTimer}
+            className={`bg-gradient-to-r from-lime-500 to-lime-600 hover:from-lime-600 hover:to-lime-700 text-gray-900 font-medium px-4 py-2 rounded-lg transition-all shadow-lg shadow-lime-500/20 ${isRunning || !hasTimeLeft() ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={isRunning || !hasTimeLeft()}
+          >
+            Start
+          </button>
+          <button
+            onClick={pauseTimer}
+            className={`bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-gray-900 font-medium px-4 py-2 rounded-lg transition-all shadow-lg ${!isRunning ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={!isRunning}
+          >
+            Pause
+          </button>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-4">
+          <button
+            onClick={resetCurrentTimer}
+            className="bg-gray-700/60 hover:bg-gray-700/80 text-white px-4 py-2 rounded-lg transition-all border border-gray-600/50"
+          >
+            Reset Current
+          </button>
+          <button
+            onClick={resetAll}
+            className="bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30 px-4 py-2 rounded-lg transition-all"
+          >
+            Reset All
+          </button>
+        </div>
       </div>
       
       {/* Toast Notification */}
       {toast.show && (
-        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 py-2 px-4 rounded-lg z-50 shadow-lg 
-          ${toast.type === 'work' ? 'bg-red-500 text-white' : 
-            toast.type === 'break' ? 'bg-green-500 text-white' : 
-            'bg-blue-500 text-white'}`}
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 py-2 px-4 rounded-lg z-50 shadow-lg backdrop-blur-sm
+          ${toast.type === 'work' ? 'bg-lime-500/80 text-white' : 
+            toast.type === 'break' ? 'bg-lime-500/80 text-white' : 
+            'bg-lime-500/80 text-white'}`}
         >
           {toast.message}
         </div>
