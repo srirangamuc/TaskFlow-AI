@@ -10,7 +10,7 @@ export default function Home() {
   const [syncing, setSyncing] = useState(false)
   const [syncStatus, setSyncStatus] = useState("")
 
-  // Fetch weekly activity data from the backend
+  // Fetch weekly activity data from the backend to user dashboard
   useEffect(() => {
     const fetchWeeklyData = async () => {
       try {
