@@ -42,11 +42,11 @@ export default function Sidebar() {
   
   return (
     <div className="w-64 h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black relative overflow-hidden">
-      {/* Blurry gradient elements */}
+      {/* Blurry gradient elements with green shades */}
       <div className="absolute -top-20 -left-20 w-40 h-40 bg-lime-500/20 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 -left-10 w-40 h-40 bg-lime-500/10 rounded-full blur-3xl"></div>
       
-      {/* Content */}
+      {/* Content can done in many ways */}
       <div className="relative z-10 p-6 h-full flex flex-col justify-center items-center space-y-8">
         <div>
           <h1 className="text-2xl font-bold mb-8 text-white flex items-center justify-center">
